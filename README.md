@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Startup Growth Hacks
 
-## Getting Started
+The deepest indexed library of **464 hand-illustrated growth hacks** for startups. Inbox-style browser, deep-dive playbook per hack, leaderboard, dashboard, paywall — all in Next.js 16 with Prisma + SQLite.
 
-First, run the development server:
+→ [startupgrowthhacks.com](https://startupgrowthhacks.com)
+
+## Stack
+
+- **Next.js 16** (App Router, server actions, parallel routes)
+- **Prisma 6** + **SQLite** (volume-mounted in production)
+- **bcrypt + JWT** session auth
+- **Tailwind 4** + custom design tokens
+
+## Run locally
 
 ```bash
+npm install
+npx prisma migrate dev
+npm run db:seed      # seeds 464 tactics + deep-dive content + sample comments
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+→ http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploy (Railway)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Configured for Railway with a Nixpacks build. The `scripts/start.mjs` start command:
 
-## Learn More
+1. Runs `prisma migrate deploy` against the mounted DB
+2. Detects empty DB and seeds it
+3. Launches `next start`
 
-To learn more about Next.js, take a look at the following resources:
+**Required env vars**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Var | Example |
+|---|---|
+| `DATABASE_URL` | `file:/data/prod.db` (mount a Railway volume at `/data`) |
+| `AUTH_SECRET` | 32+ random chars |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Routes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Path | What |
+|---|---|
+| `/` | Hero + inbox (loads first hack on right) |
+| `/hacks/[slug]` | Individual hack (one of 464) — full deep-dive |
+| `/leaderboard` | Top 50 by community vote |
+| `/dashboard` | Saved hacks + activity (auth required) |
+| `/signin` / `/signup` | bcrypt + JWT cookie session |
+| `/unlock` | £49 one-time paywall |
+| `/sitemap.xml` `/robots.txt` `/llms.txt` | SEO + GEO foundation |

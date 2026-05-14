@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String?
+  passwordHash  String
+  isPro         Boolean        @default(false)
+  createdAt     DateTime       @default(now())
+  votes         Vote[]
+  comments      Comment[]
+  saved         SavedHack[]
+  emailRequests EmailRequest[]
+}
+
+model Tactic {
+  id         Int       @id
+  slug       String    @unique
+  tactic     String
+  category   String
+  channel    String
+  stage      String
+  difficulty String
+  impact     String
+  cost       String
+  effort     String
+  biz        String    // JSON array
+  how        String
+  example    String
+  tip        String
+  bestFor    String
+  playbook   String?   // JSON array of step strings
+  metrics    String?   // JSON array of KPI strings
+  tools      String?   // JSON array of tool name strings
+  timeline   String?
+  benchmarks String?
+  pitfalls   String?   // JSON array of common-failure strings
+  related    String?   // JSON array of tactic IDs
+  baseVotes  Int       @default(0)
+  votes      Vote[]
+  comments   Comment[]
+  saved      SavedHack[]
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  userId    String
+  tacticId  Int
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tactic    Tactic   @relation(fields: [tacticId], references: [id], onDelete: Cascade)
+  @@unique([userId, tacticId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  userId    String?
+  authorName String
+  body      String
+  tacticId  Int
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  tactic    Tactic   @relation(fields: [tacticId], references: [id], onDelete: Cascade)
+}
+
+model SavedHack {
+  id        String   @id @default(cuid())
+  userId    String
+  tacticId  Int
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tactic    Tactic   @relation(fields: [tacticId], references: [id], onDelete: Cascade)
+  @@unique([userId, tacticId])
+}
+
+model EmailRequest {
+  id        String   @id @default(cuid())
+  userId    String?
+  email     String
+  tacticId  Int
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+}

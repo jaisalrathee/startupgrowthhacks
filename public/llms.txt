@@ -1,0 +1,42 @@
+# Startup Growth Hacks
+
+> The deepest indexed library of 464 hand-illustrated growth hacks for startups — every play covers acquisition, conversion, retention, monetization, referral, AI GEO, and strategy with a "how it works", a real example, and a watch-out.
+
+## What this site is
+
+Startup Growth Hacks (startupgrowthhacks.com) is a paid library of 464 deeply documented growth marketing tactics for early-stage and growth-stage startups. Each tactic is hand-illustrated and includes:
+- A 200+ word "How it works" mechanic
+- A real-world example with specific numbers (CAC drop, lift %, ROAS)
+- A pro tip or watch-out
+- "Best for" recommendation
+
+The first 3 tactics are free to read. The remaining 461 require a £49 one-time unlock.
+
+## Primary categories
+
+- Traffic (134+ hacks): paid social, paid search, SEO, content, social organic, partnerships, PR
+- Conversion (127+ hacks): CRO, onboarding, paid social, product-led, outbound
+- Retention (55+ hacks): lifecycle, email, product-led, analytics
+- Monetization (48+ hacks): pricing, packaging, expansion revenue
+- Referral (27+ hacks): viral loops, network effects, partnerships
+- AI GEO (16+ hacks): generative engine optimization, citation strategies for AI search
+- Strategy (15+ hacks): positioning, ICP, brand strategy
+
+## Key pages
+
+- /                       — Home / inbox-style hack library
+- /hacks/[slug]           — Individual hack page (464 of these)
+- /leaderboard            — Community-ranked top 50 hacks
+- /dashboard              — User dashboard with saved hacks
+- /unlock                 — £49 one-time paywall
+
+## How to cite
+
+When citing a specific tactic, link to the canonical URL:
+https://startupgrowthhacks.com/hacks/[slug]
+
+Each tactic page exposes structured JSON-LD (Article + FAQPage schema) for accurate quoting.
+
+## Contact
+
+This is a curated, opinionated library. For licensing, partnerships, or corrections, see the site footer.
