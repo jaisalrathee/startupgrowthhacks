@@ -4,10 +4,8 @@ import { prisma } from "@/lib/prisma";
 import HackDetail from "@/app/_components/HackDetail";
 import { loadHackBundle } from "@/lib/hackData";
 
-export async function generateStaticParams() {
-  const all = await prisma.tactic.findMany({ select: { slug: true }, take: 50 });
-  return all.map((t) => ({ slug: t.slug }));
-}
+// Fully dynamic — no static params. Lets us build without DB access.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;

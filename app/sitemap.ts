@@ -3,8 +3,15 @@ import { prisma } from "@/lib/prisma";
 
 const BASE = "https://startupgrowthhacks.com";
 
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const tactics = await prisma.tactic.findMany({ select: { slug: true } });
+  let tactics: { slug: string }[] = [];
+  try {
+    tactics = await prisma.tactic.findMany({ select: { slug: true } });
+  } catch {
+    tactics = [];
+  }
   const now = new Date();
   return [
     { url: BASE, lastModified: now, changeFrequency: "weekly", priority: 1 },

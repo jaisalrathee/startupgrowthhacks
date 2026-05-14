@@ -16,6 +16,8 @@ function tintFor(cat: string) {
   return ({ Traffic: "var(--accent)", Conversion: "var(--accent-3)", Retention: "var(--accent-2)", Monetization: "var(--accent-warn)", Referral: "var(--accent)", "AI GEO": "var(--accent-2)", Strategy: "var(--accent-warn)" } as Record<string, string>)[cat] || "var(--text)";
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function LeaderboardPage() {
   const [tactics, user] = await Promise.all([
     prisma.tactic.findMany({
