@@ -45,10 +45,13 @@ try {
     console.log("[start] DB empty — seeding…");
     await run("npx", ["tsx", "prisma/seed.ts"]);
     await run("npx", ["tsx", "prisma/seed-cro.ts"]);
-    await run("npx", ["tsx", "prisma/generate-deep-dive.ts"]);
   } else {
     console.log("[start] DB has data, skipping seed.");
   }
+  // Always re-run the deep-dive generator — idempotent updates to playbook/metrics/tools/etc
+  // so latest catalog changes ship without needing a fresh DB.
+  console.log("[start] regenerating deep-dive content…");
+  await run("npx", ["tsx", "prisma/generate-deep-dive.ts"]);
 } catch (e) {
   console.error("[start] migration/seed failed:", e?.message || e);
   process.exit(1);
