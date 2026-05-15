@@ -52,6 +52,10 @@ try {
   // so latest catalog changes ship without needing a fresh DB.
   console.log("[start] regenerating deep-dive content…");
   await run("npx", ["tsx", "prisma/generate-deep-dive.ts"]);
+
+  // Remove any seeded fake comments (idempotent — match-by-author-name no-op once clean).
+  console.log("[start] cleaning seeded fake comments…");
+  await run("npx", ["tsx", "prisma/cleanup-fake-comments.ts"]);
 } catch (e) {
   console.error("[start] migration/seed failed:", e?.message || e);
   process.exit(1);
