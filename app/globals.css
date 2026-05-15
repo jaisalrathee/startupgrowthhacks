@@ -309,6 +309,21 @@ html.light .hero::after { background: radial-gradient(circle, rgba(255,143,200,0
 .pill.impact-medium { color: var(--accent-warn); border-color: rgba(255,184,107,0.3); background: rgba(255,184,107,0.08); }
 .pill.impact-low { color: var(--text-faint); }
 
+/* ---------- Cursor sparks ---------- */
+@keyframes sgh-spark-fade {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 0.95;
+  }
+  40% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(var(--sgh-dx), var(--sgh-dy), 0) scale(0.15) rotate(var(--sgh-rot));
+    opacity: 0;
+  }
+}
+
 /* ---------- Playlist cards ---------- */
 .playlist-card:hover {
   transform: translateY(-2px);

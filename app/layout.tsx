@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "./_components/Nav";
 import Modals from "./_components/Modals";
+import CursorSparks from "./_components/CursorSparks";
 import { getCurrentUser } from "@/lib/auth";
 
 export const metadata: Metadata = {
@@ -63,6 +64,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Nav user={user} />
         {children}
         <Modals isAuthed={!!user} />
+        <CursorSparks />
       </body>
     </html>
   );
