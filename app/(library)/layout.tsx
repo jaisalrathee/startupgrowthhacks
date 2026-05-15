@@ -29,6 +29,14 @@ export default async function LibraryLayout({
     votes: t.baseVotes + t._count.votes,
   }));
 
+  // Shuffle (Fisher-Yates) so the "All" view feels alive instead of category-clustered.
+  // Filtering by category, sorting by trending/top/newest, or searching still applies
+  // its own order on top of this.
+  for (let i = lite.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [lite[i], lite[j]] = [lite[j], lite[i]];
+  }
+
   return (
     <>
       {hero}

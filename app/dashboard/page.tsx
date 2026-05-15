@@ -44,7 +44,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             {fullUser?.isPro ? (
               <><span style={{ color: "var(--accent-3)" }}>● PRO</span> · joined {fullUser.createdAt.toLocaleDateString("en-GB", { month: "short", year: "numeric" })}</>
             ) : (
-              <><span style={{ color: "var(--accent-warn)" }}>● Free</span> · 3 of 464 hacks unlocked · <Link href="/unlock" style={{ color: "var(--accent)", textDecoration: "underline" }}>get all for £49 →</Link></>
+              <><span style={{ color: "var(--accent-warn)" }}>● Free</span> · 10 of 464 hacks unlocked · <Link href="/unlock" style={{ color: "var(--accent)", textDecoration: "underline" }}>get all for £49 →</Link></>
             )}
           </p>
         </div>
