@@ -1,7 +1,11 @@
+import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { getCurrentUser } from "@/lib/auth";
 
 export default async function HeroSlot() {
-  const count = await prisma.tactic.count();
+  const [count, user] = await Promise.all([prisma.tactic.count(), getCurrentUser()]);
+  const isPro = !!user?.isPro;
+
   return (
     <section className="hero">
       <div className="mono" style={{ color: "var(--text-dim)", fontSize: 11, letterSpacing: "0.18em" }}>
@@ -18,10 +22,27 @@ export default async function HeroSlot() {
       <p className="sub">
         <b>No fluff.</b> {count} hand-illustrated growth plays — the how, the example, the gotcha. Stuff that actually moved the number.
       </p>
-      <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 18, padding: "6px 14px", borderRadius: 999, background: "var(--bg-soft)", border: "1px solid var(--line)", fontSize: 12, color: "var(--text-dim)" }}>
-        <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent-warn)" }} />
-        Updated weekly · operators only
-      </div>
+
+      {!isPro && (
+        <div style={{ marginTop: 28, display: "flex", justifyContent: "center" }}>
+          <Link href="/unlock" className="hero-cta">
+            <span className="hero-cta-inner">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <rect x="4" y="11" width="16" height="10" rx="2" />
+                <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+              </svg>
+              Get Full Access
+              <span className="hero-cta-price">
+                <span className="hero-cta-strike">£100</span>
+                £49
+              </span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M5 12h14 M12 5l7 7-7 7" />
+              </svg>
+            </span>
+          </Link>
+        </div>
+      )}
     </section>
   );
 }
