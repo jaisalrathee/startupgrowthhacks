@@ -26,7 +26,11 @@ The first 3 tactics are free to read. The remaining 461 require a £49 one-time 
 
 - /                       — Home / inbox-style hack library
 - /hacks/[slug]           — Individual hack page (464 of these)
+- /playlists              — Curated playbooks index (6 themed playlists)
+- /playlists/[slug]       — Individual playlist
+- /cro-checklist          — Free 58-item Conversion Rate Optimisation checklist for early-stage startup founders, organised by funnel stage
 - /leaderboard            — Community-ranked top 50 hacks
+- /book                   — Book a 1:1 growth advisory call with Jaisal Rathee
 - /dashboard              — User dashboard with saved hacks
 - /unlock                 — £49 one-time paywall
 

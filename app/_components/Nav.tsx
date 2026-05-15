@@ -42,6 +42,7 @@ export default function Nav({ user }: { user: User }) {
         <div className="nav-links">
           <Link href="/" className={isActive("/") && pathname === "/" ? "active" : ""}>Tactics</Link>
           <Link href="/playlists" className={isActive("/playlists") ? "active" : ""}>Playlists</Link>
+          <Link href="/cro-checklist" className={isActive("/cro-checklist") ? "active" : ""}>CRO Checklist</Link>
           <Link href="/leaderboard" className={isActive("/leaderboard") ? "active" : ""}>Leaderboard</Link>
           <Link href="/book" className={isActive("/book") ? "active" : ""}>Book a call</Link>
           {user && <Link href="/dashboard" className={isActive("/dashboard") ? "active" : ""}>Dashboard</Link>}
@@ -93,6 +94,10 @@ export default function Nav({ user }: { user: User }) {
             <Link href="/playlists" className="mobile-menu-link" onClick={() => setMenuOpen(false)}>
               <span>Playlists</span>
               <span className="mono mobile-menu-meta">Curated</span>
+            </Link>
+            <Link href="/cro-checklist" className="mobile-menu-link" onClick={() => setMenuOpen(false)}>
+              <span>CRO Checklist</span>
+              <span className="mono mobile-menu-meta" style={{ color: "var(--accent-3)" }}>Free</span>
             </Link>
             <Link href="/leaderboard" className="mobile-menu-link" onClick={() => setMenuOpen(false)}>
               <span>Leaderboard</span>
