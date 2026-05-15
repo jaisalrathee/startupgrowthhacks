@@ -14,7 +14,8 @@ export default async function LibraryLayout({
   const [tactics, user] = await Promise.all([
     prisma.tactic.findMany({
       select: {
-        id: true, slug: true, tactic: true, category: true, channel: true, impact: true,
+        id: true, slug: true, tactic: true, category: true, channel: true,
+        stage: true, impact: true, cost: true, effort: true, difficulty: true,
         baseVotes: true, _count: { select: { votes: true } },
       },
       orderBy: { id: "asc" },
@@ -23,7 +24,8 @@ export default async function LibraryLayout({
   ]);
   const lite = tactics.map((t) => ({
     id: t.id, slug: t.slug, tactic: t.tactic, category: t.category,
-    channel: t.channel, impact: t.impact,
+    channel: t.channel, stage: t.stage, impact: t.impact, cost: t.cost,
+    effort: t.effort, difficulty: t.difficulty,
     votes: t.baseVotes + t._count.votes,
   }));
 
