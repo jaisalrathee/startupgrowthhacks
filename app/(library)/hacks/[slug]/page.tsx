@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import HackDetail from "@/app/_components/HackDetail";
 import { loadHackBundle } from "@/lib/hackData";
+import { canonical, SITE, breadcrumb, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 // Fully dynamic — no static params. Lets us build without DB access.
 export const dynamic = "force-dynamic";
@@ -15,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: t.tactic,
     description: desc,
-    openGraph: { title: t.tactic, description: desc, type: "article" },
+    openGraph: { title: t.tactic, description: desc, type: "article", images: DEFAULT_OG_IMAGE },
     alternates: { canonical: `https://startupgrowthhacks.com/hacks/${t.slug}` },
     keywords: [t.tactic, t.category, t.channel, t.stage, "growth hack", "startup growth"],
   };
@@ -48,10 +49,17 @@ export default async function HackPage({ params }: { params: Promise<{ slug: str
     ],
   };
 
+  const breadcrumbLd = breadcrumb([
+    { name: "Home", url: SITE.url },
+    { name: t.category, url: `${SITE.url}/?category=${encodeURIComponent(t.category)}` },
+    { name: t.tactic, url: `${SITE.url}/hacks/${t.slug}` },
+  ]);
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       <HackDetail {...bundle} />
     </>
   );

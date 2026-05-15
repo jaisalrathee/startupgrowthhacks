@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
 import BookForm from "../_components/BookForm";
+import { canonical, SITE, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Book a 1:1 growth call with Jaisal",
   description:
-    "Spend 30–60 minutes with Jaisal on your growth strategy. Pick the package — free intro, 60-min deep dive, or a full custom playbook for your business.",
+    "Spend 30–60 minutes with Jaisal on your growth strategy. Pick the package — free 20-min intro, £249 60-min strategy session, or £1,499 two-week custom playbook for your business.",
+  alternates: { canonical: canonical("/book") },
   openGraph: {
     title: "Book a 1:1 growth call with Jaisal — Startup Growth Hacks",
     description:
       "Real conversation, real ideas. Pick the package and we'll get on a call within 5 days.",
+    url: canonical("/book"),
     type: "website",
+    images: DEFAULT_OG_IMAGE,
   },
 };
 
@@ -65,8 +69,28 @@ const PACKAGES = [
 ];
 
 export default function BookPage() {
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: "Startup Growth Advisory · Jaisal Rathee",
+    url: canonical("/book"),
+    provider: { "@id": `${SITE.url}#jaisal` },
+    areaServed: "Worldwide",
+    description: "1:1 growth strategy advisory for early-stage and growth-stage startup founders.",
+    offers: PACKAGES.map((p) => ({
+      "@type": "Offer",
+      name: p.name,
+      description: p.description,
+      price: p.price === "Free" ? "0" : p.price.replace(/[^0-9]/g, ""),
+      priceCurrency: "GBP",
+      availability: "https://schema.org/InStock",
+      url: canonical("/book") + `#book?package=${p.id}`,
+    })),
+  };
+
   return (
     <div style={{ maxWidth: 1100, margin: "0 auto", padding: "60px 20px 80px" }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       <section style={{ textAlign: "center", marginBottom: 56 }}>
         <div className="mono" style={{ color: "var(--text-dim)", fontSize: 11, letterSpacing: "0.18em" }}>
           § 03 — Work directly with me

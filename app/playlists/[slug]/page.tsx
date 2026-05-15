@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth";
 import { isLocked, firstWord, rest } from "@/lib/lock";
 import { getPlaylist, PLAYLISTS, accentVar } from "@/lib/playlists";
+import { canonical, SITE, breadcrumb, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -12,10 +13,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const p = getPlaylist(slug);
   if (!p) return { title: "Not found" };
+  const url = canonical(`/playlists/${p.slug}`);
   return {
     title: `${p.title} — ${p.subtitle}`,
     description: p.description.slice(0, 155),
-    openGraph: { title: `${p.title} · Startup Growth Hacks playlist`, description: p.description.slice(0, 200) },
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${p.title} · Startup Growth Hacks playlist`,
+      description: p.description.slice(0, 200),
+      url,
+      type: "article",
+      images: DEFAULT_OG_IMAGE,
+    },
   };
 }
 
@@ -46,8 +55,31 @@ export default async function PlaylistPage({ params }: { params: Promise<{ slug:
 
   const accent = accentVar(playlist);
 
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: playlist.title,
+    description: playlist.description,
+    url: canonical(`/playlists/${playlist.slug}`),
+    numberOfItems: ordered.length,
+    itemListOrder: "ItemListOrderAscending",
+    itemListElement: ordered.map((t, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: canonical(`/hacks/${t.slug}`),
+      name: t.tactic,
+    })),
+  };
+  const breadcrumbLd = breadcrumb([
+    { name: "Home", url: SITE.url },
+    { name: "Playlists", url: `${SITE.url}/playlists` },
+    { name: playlist.title, url: canonical(`/playlists/${playlist.slug}`) },
+  ]);
+
   return (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "48px 20px 80px" }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       <nav className="mono" style={{ color: "var(--text-faint)", marginBottom: 12, fontSize: 11 }}>
         <Link href="/playlists" style={{ color: "var(--text-faint)" }}>← All playlists</Link>
       </nav>

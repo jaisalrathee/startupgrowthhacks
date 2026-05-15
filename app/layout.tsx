@@ -4,35 +4,46 @@ import Nav from "./_components/Nav";
 import Modals from "./_components/Modals";
 import CursorSparks from "./_components/CursorSparks";
 import { getCurrentUser } from "@/lib/auth";
+import { WEBSITE_SCHEMA, ORG_SCHEMA, PERSON_SCHEMA, SITE } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://startupgrowthhacks.com"),
+  metadataBase: new URL(SITE.url),
   title: {
     default: "Startup Growth Hacks — 464 growth plays for 2026",
     template: "%s · Startup Growth Hacks",
   },
-  description:
-    "The deepest indexed library of growth hacks for startups: 464 hand-illustrated plays across acquisition, conversion, retention, monetization, referral, and AI GEO. The how, the example, the gotcha — no fluff.",
+  description: SITE.description,
   keywords: [
-    "startup growth hacks", "growth marketing", "conversion optimization",
-    "user retention", "activation", "cold email", "landing page CRO",
-    "SaaS growth", "growth playbook", "AI GEO", "generative engine optimization",
+    "startup growth hacks", "growth marketing", "conversion rate optimization",
+    "CRO checklist", "user retention", "user activation", "cold email tactics",
+    "landing page CRO", "SaaS growth", "growth playbook", "growth advisor",
+    "AI GEO", "generative engine optimization", "ChatGPT search SEO",
+    "pricing strategy", "B2B SaaS growth", "early-stage startup growth",
   ],
-  authors: [{ name: "Startup Growth Hacks" }],
+  alternates: { canonical: SITE.url },
+  authors: [{ name: SITE.author, url: `${SITE.url}/book` }],
+  creator: SITE.author,
+  publisher: SITE.name,
   openGraph: {
-    title: "Startup Growth Hacks — 464 growth plays for 2026",
+    title: "Steal the growth hacks behind every unicorn",
     description:
-      "464 hand-illustrated startup growth hacks — every play with the how, the example, and the gotcha. No fluff.",
-    url: "https://startupgrowthhacks.com",
-    siteName: "Startup Growth Hacks",
+      "464 hand-illustrated startup growth hacks. Every play with the how, the example, and the gotcha. No fluff.",
+    url: SITE.url,
+    siteName: SITE.name,
     type: "website",
+    locale: "en_GB",
   },
   twitter: {
     card: "summary_large_image",
     title: "Startup Growth Hacks — 464 plays for 2026",
     description: "The unfair growth playbook for ambitious founders.",
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  },
+  category: "marketing",
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -61,6 +72,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </filter>
           </defs>
         </svg>
+        {/* Site-wide entity graph — WebSite + Organization + Person — referenced by every page schema for AI engine citation trust */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [WEBSITE_SCHEMA, { ...ORG_SCHEMA, "@context": "https://schema.org" }, { ...PERSON_SCHEMA, "@context": "https://schema.org" }],
+            }),
+          }}
+        />
         <Nav user={user} />
         {children}
         <Modals isAuthed={!!user} />

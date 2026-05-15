@@ -1,16 +1,46 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PLAYLISTS, accentVar } from "@/lib/playlists";
+import { canonical, SITE, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Curated playlists — hand-picked growth playbooks",
   description:
-    "Curated growth-hack playbooks for specific founder situations: first 90 days, B2B SaaS Series A, ecom Q4, indie hacker leverage, retention rescue, and more.",
+    "Curated growth-hack playbooks for specific founder situations: first 90 days, B2B SaaS Series A, ecom Q4, indie hacker leverage, retention rescue. Each playlist is an ordered sequence of 10-17 hacks tuned to that moment.",
+  alternates: { canonical: canonical("/playlists") },
+  openGraph: {
+    title: "Curated growth playbooks · 6 playlists for specific founder moments",
+    description: "Run them top-to-bottom. First 90 days. CRO sprint. Series A scale. Q4 ecom. Indie hacker. Retention rescue.",
+    url: canonical("/playlists"),
+    type: "website",
+    images: DEFAULT_OG_IMAGE,
+  },
 };
 
 export default function PlaylistsIndexPage() {
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Curated growth-hack playlists",
+    description: "Hand-picked playbooks for specific founder situations.",
+    url: canonical("/playlists"),
+    isPartOf: { "@id": `${SITE.url}#website` },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListOrder: "Unordered",
+      numberOfItems: PLAYLISTS.length,
+      itemListElement: PLAYLISTS.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: canonical(`/playlists/${p.slug}`),
+        name: p.title,
+      })),
+    },
+  };
+
   return (
     <div style={{ maxWidth: 1100, margin: "0 auto", padding: "60px 20px 80px" }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
       <section style={{ textAlign: "center", marginBottom: 56 }}>
         <div className="mono" style={{ color: "var(--text-dim)", fontSize: 11, letterSpacing: "0.18em" }}>
           § Curated playlists

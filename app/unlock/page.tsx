@@ -2,8 +2,14 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { purchaseUnlockAction } from "../actions";
+import { canonical } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Unlock all 464 hacks — £49 one-time" };
+export const metadata: Metadata = {
+  title: "Unlock all 464 hacks — £49 one-time",
+  description: "One-time £49 unlock for all 464 hand-illustrated growth hacks. Lifetime access. No subscription.",
+  alternates: { canonical: canonical("/unlock") },
+  robots: { index: false, follow: true },
+};
 
 export default async function UnlockPage() {
   const user = await getCurrentUser();

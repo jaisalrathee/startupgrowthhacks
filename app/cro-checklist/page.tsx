@@ -3,10 +3,11 @@ import Link from "next/link";
 import { CRO_CHECKLIST, TOTAL_ITEMS } from "@/lib/croChecklist";
 import ChecklistSection from "@/app/_components/ChecklistSection";
 import ChecklistProgress from "@/app/_components/ChecklistProgress";
+import { canonical, SITE, breadcrumb, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 const TITLE = `CRO Checklist for Startup Founders — ${TOTAL_ITEMS} items across landing pages, apps & funnels`;
 const DESCRIPTION = `The free Conversion Rate Optimisation checklist for early-stage startup founders. ${TOTAL_ITEMS} tested items across landing pages, hero sections, pricing, signup forms, onboarding, mobile, analytics, and AI personalisation. Tickable, organised by funnel stage.`;
-const URL = "https://startupgrowthhacks.com/cro-checklist";
+const URL = canonical("/cro-checklist");
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     url: URL,
     type: "article",
+    images: DEFAULT_OG_IMAGE,
   },
   twitter: {
     card: "summary_large_image",
@@ -112,6 +114,17 @@ export default function CROChecklistPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumb([
+              { name: "Home", url: SITE.url },
+              { name: "CRO Checklist", url: URL },
+            ])
+          ),
+        }}
+      />
 
       <header style={{ marginBottom: 40 }}>
         <div className="mono" style={{ color: "var(--text-dim)", fontSize: 11, letterSpacing: "0.18em" }}>

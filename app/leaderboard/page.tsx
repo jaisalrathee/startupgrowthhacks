@@ -3,10 +3,19 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth";
 import { isLocked, firstWord, rest } from "@/lib/lock";
+import { canonical, SITE, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Leaderboard — what's actually working",
   description: "Community-ranked startup growth hacks — upvoted by operators who've shipped them. The top 50 plays winning right now.",
+  alternates: { canonical: canonical("/leaderboard") },
+  openGraph: {
+    title: "Growth hacks leaderboard · what's actually working right now",
+    description: "Top 50 community-ranked plays. Upvoted by operators who shipped them.",
+    url: canonical("/leaderboard"),
+    type: "website",
+    images: DEFAULT_OG_IMAGE,
+  },
 };
 
 function initials(s: string) {
