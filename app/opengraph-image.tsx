@@ -56,7 +56,7 @@ export default async function OG() {
               width: 56,
               height: 56,
               borderRadius: 14,
-              background: "conic-gradient(from 0deg, #7ad0ff, #b39dff, #ff8fc8, #ffb86b, #79f0c6, #7ad0ff)",
+              background: "linear-gradient(135deg, #7ad0ff 0%, #b39dff 35%, #ff8fc8 65%, #ffb86b 100%)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
