@@ -88,3 +88,15 @@ model EmailRequest {
   createdAt DateTime @default(now())
   user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 }
+
+model Booking {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  company   String?
+  stage     String?  // pre-launch / early-traction / growth / scale
+  budget    String?  // none / sub-1k / 1-5k / 5k+
+  topic     String   // what they want help with
+  package   String   // intro / strategy / deep-dive
+  createdAt DateTime @default(now())
+}

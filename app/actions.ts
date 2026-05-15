@@ -96,6 +96,23 @@ export async function emailRequestAction(tacticId: number, formData: FormData) {
   return { ok: true };
 }
 
+export async function bookCallAction(formData: FormData) {
+  const name = ((formData.get("name") as string) ?? "").trim();
+  const email = ((formData.get("email") as string) ?? "").trim().toLowerCase();
+  const company = ((formData.get("company") as string) ?? "").trim() || null;
+  const stage = ((formData.get("stage") as string) ?? "").trim() || null;
+  const budget = ((formData.get("budget") as string) ?? "").trim() || null;
+  const topic = ((formData.get("topic") as string) ?? "").trim();
+  const pkg = ((formData.get("package") as string) ?? "intro").trim();
+  if (!name || !email.includes("@") || !topic) {
+    return { error: "Name, email, and topic are required." };
+  }
+  await prisma.booking.create({
+    data: { name, email, company, stage, budget, topic: topic.slice(0, 1000), package: pkg },
+  });
+  return { ok: true };
+}
+
 export async function newsletterSignupAction(formData: FormData) {
   const email = ((formData.get("email") as string) ?? "").trim().toLowerCase();
   const source = ((formData.get("source") as string) ?? "newsletter").trim();

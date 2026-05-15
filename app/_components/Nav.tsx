@@ -42,6 +42,7 @@ export default function Nav({ user }: { user: User }) {
         <div className="nav-links">
           <Link href="/" className={isActive("/") && pathname === "/" ? "active" : ""}>Tactics</Link>
           <Link href="/leaderboard" className={isActive("/leaderboard") ? "active" : ""}>Leaderboard</Link>
+          <Link href="/book" className={isActive("/book") ? "active" : ""}>Book a call</Link>
           {user && <Link href="/dashboard" className={isActive("/dashboard") ? "active" : ""}>Dashboard</Link>}
         </div>
 
@@ -91,6 +92,10 @@ export default function Nav({ user }: { user: User }) {
             <Link href="/leaderboard" className="mobile-menu-link" onClick={() => setMenuOpen(false)}>
               <span>Leaderboard</span>
               <span className="mono mobile-menu-meta">Top 50</span>
+            </Link>
+            <Link href="/book" className="mobile-menu-link" onClick={() => setMenuOpen(false)}>
+              <span>Book a call</span>
+              <span className="mono mobile-menu-meta" style={{ color: "var(--accent)" }}>1:1 with Jaisal</span>
             </Link>
             {user && (
               <Link href="/dashboard" className="mobile-menu-link" onClick={() => setMenuOpen(false)}>
