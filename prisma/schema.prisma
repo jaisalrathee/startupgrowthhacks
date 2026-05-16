@@ -43,6 +43,7 @@ model Tactic {
   benchmarks String?
   pitfalls   String?   // JSON array of common-failure strings
   related    String?   // JSON array of tactic IDs
+  realExample String?  // JSON { attribution, story } — verified real-world case
   baseVotes  Int       @default(0)
   votes      Vote[]
   comments   Comment[]

@@ -12,6 +12,7 @@
  */
 
 import { PrismaClient } from "@prisma/client";
+import { findRealCase } from "../lib/realExamples";
 const prisma = new PrismaClient();
 
 // ---- Tool catalog (up to 10 per channel, each with URL) ----
@@ -875,6 +876,7 @@ async function main() {
     const timeline = timelineFor(t.effort, t.impact);
     const benchmarks = benchmarksFor(t.impact, t.cost, t.category);
     const pitfalls = pitfallsFor(t);
+    const realCase = findRealCase({ tactic: t.tactic, how: t.how });
 
     // Related: 3 from same category, different channel, prefer same stage if available.
     const candidates = (byCategory[t.category] || [])
@@ -896,6 +898,7 @@ async function main() {
         benchmarks,
         pitfalls: JSON.stringify(pitfalls),
         related: JSON.stringify(related),
+        realExample: realCase ? JSON.stringify(realCase) : null,
       },
     });
 

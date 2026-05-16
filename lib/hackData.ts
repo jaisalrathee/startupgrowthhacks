@@ -50,6 +50,11 @@ export async function loadHackBundle(slug: string) {
       benchmarks: t.benchmarks ?? "",
       pitfalls: parseJsonArr(t.pitfalls),
       related,
+      realExample: (() => {
+        if (!t.realExample) return null;
+        try { return JSON.parse(t.realExample) as { attribution: string; story: string }; }
+        catch { return null; }
+      })(),
     },
   };
 }

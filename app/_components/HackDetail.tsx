@@ -51,6 +51,7 @@ export type HackDetailProps = {
     benchmarks: string;
     pitfalls: string[];
     related: RelatedTactic[];
+    realExample?: { attribution: string; story: string } | null;
   };
 };
 
@@ -151,6 +152,34 @@ export default function HackDetail({
           )}
 
           <div className="section example"><div className="section-label">In the wild</div><p>{t.example}</p></div>
+
+          {deepDive.realExample && (
+            <div
+              className="section"
+              style={{
+                padding: 20,
+                borderRadius: 12,
+                border: "1px solid rgba(121,240,198,0.35)",
+                background: "linear-gradient(135deg, rgba(121,240,198,0.06), rgba(122,208,255,0.06))",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
+                <span className="mono" style={{
+                  fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase",
+                  color: "var(--accent-3)", padding: "4px 8px", borderRadius: 4,
+                  background: "rgba(121,240,198,0.12)", border: "1px solid rgba(121,240,198,0.3)",
+                }}>
+                  Real-world case
+                </span>
+                <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text)" }}>
+                  {deepDive.realExample.attribution}
+                </span>
+              </div>
+              <p style={{ margin: 0, fontSize: 15, lineHeight: 1.65, color: "var(--text)" }}>
+                {deepDive.realExample.story}
+              </p>
+            </div>
+          )}
 
           {(deepDive.metrics.length > 0 || deepDive.tools.length > 0) && (
             <div className="section" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 18 }}>
